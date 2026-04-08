@@ -1,0 +1,326 @@
+[
+  {
+    "case_id": "C001",
+    "patient_age": 35,
+    "patient_sex": "M",
+    "language": "en",
+    "chief_complaint": "stomach pain after eating for 3 days",
+    "current_medications": ["ibuprofen 400mg for back pain"],
+    "allergies": [],
+    "conversation_history": [{"role": "patient", "content": "I have stomach pain after eating for 3 days"}],
+    "task_type": "question_quality",
+    "task_description": "Ask the right follow-up questions to understand this patient's stomach pain.",
+    "ground_truth": {"expected_topics": ["location", "vomiting", "fever", "medications", "food relation"]}
+  },
+  {
+    "case_id": "C002",
+    "patient_age": 28,
+    "patient_sex": "F",
+    "language": "hi",
+    "chief_complaint": "bukhar aur sir dard 2 din se",
+    "current_medications": [],
+    "allergies": [],
+    "conversation_history": [{"role": "patient", "content": "Mujhe 2 din se bukhar hai aur sir dard bhi hai"}],
+    "task_type": "question_quality",
+    "task_description": "Ask the right follow-up questions to understand this patient's fever and headache.",
+    "ground_truth": {"expected_topics": ["temperature", "chills", "body ache", "rash", "duration", "cough", "urine"]}
+  },
+  {
+    "case_id": "C003",
+    "patient_age": 45,
+    "patient_sex": "M",
+    "language": "en",
+    "chief_complaint": "chest pain with sweating since morning",
+    "current_medications": ["amlodipine 5mg"],
+    "allergies": [],
+    "conversation_history": [{"role": "patient", "content": "I have chest pain and I am sweating since morning"}],
+    "task_type": "question_quality",
+    "task_description": "Ask appropriate follow-up questions for this potentially serious complaint.",
+    "ground_truth": {"expected_topics": ["radiation to arm", "breathlessness", "duration", "nausea", "history"]}
+  },
+  {
+    "case_id": "C004",
+    "patient_age": 22,
+    "patient_sex": "F",
+    "language": "en",
+    "chief_complaint": "headache for 2 days with light sensitivity",
+    "current_medications": [],
+    "allergies": [],
+    "conversation_history": [{"role": "patient", "content": "I have a headache for 2 days and light bothers me"}],
+    "task_type": "question_quality",
+    "task_description": "Ask the right questions to differentiate migraine from dangerous causes.",
+    "ground_truth": {"expected_topics": ["neck stiffness", "fever", "nausea", "vision", "location", "severity"]}
+  },
+  {
+    "case_id": "C005",
+    "patient_age": 55,
+    "patient_sex": "M",
+    "language": "en",
+    "chief_complaint": "loose motions 5 times today with vomiting",
+    "current_medications": [],
+    "allergies": [],
+    "conversation_history": [{"role": "patient", "content": "I had loose motions 5 times today and also vomiting"}],
+    "task_type": "question_quality",
+    "task_description": "Ask questions to assess severity and dehydration risk.",
+    "ground_truth": {"expected_topics": ["blood in stool", "fever", "dehydration", "food history", "urine output"]}
+  },
+  {
+    "case_id": "C006",
+    "patient_age": 35,
+    "patient_sex": "M",
+    "language": "en",
+    "chief_complaint": "stomach pain after eating for 3 days, ibuprofen use, upper stomach",
+    "current_medications": ["ibuprofen 400mg twice daily"],
+    "allergies": [],
+    "conversation_history": [
+      {"role": "patient", "content": "Stomach pain for 3 days, upper area, worse after eating"},
+      {"role": "doctor", "content": "Are you taking any medicines?"},
+      {"role": "patient", "content": "Yes ibuprofen 400mg twice daily for back pain"},
+      {"role": "doctor", "content": "Any vomiting or fever?"},
+      {"role": "patient", "content": "Some nausea, no fever"}
+    ],
+    "task_type": "assessment",
+    "task_description": "Based on the conversation, assess what condition this patient likely has.",
+    "ground_truth": {"expected_conditions": ["gastritis", "drug induced gastritis", "peptic ulcer", "acidity"]}
+  },
+  {
+    "case_id": "C007",
+    "patient_age": 28,
+    "patient_sex": "F",
+    "language": "en",
+    "chief_complaint": "fever 102F body ache headache no rash",
+    "current_medications": [],
+    "allergies": [],
+    "conversation_history": [
+      {"role": "patient", "content": "Fever 102 for 2 days, body ache, headache"},
+      {"role": "doctor", "content": "Any rash, cough, or urinary symptoms?"},
+      {"role": "patient", "content": "No rash, slight cough, no urinary issues"},
+      {"role": "doctor", "content": "Any travel recently?"},
+      {"role": "patient", "content": "No recent travel"}
+    ],
+    "task_type": "assessment",
+    "task_description": "Assess the most likely cause of this fever.",
+    "ground_truth": {"expected_conditions": ["viral fever", "influenza", "common cold", "upper respiratory infection"]}
+  },
+  {
+    "case_id": "C008",
+    "patient_age": 40,
+    "patient_sex": "M",
+    "language": "en",
+    "chief_complaint": "burning urination frequent urination 2 days",
+    "current_medications": [],
+    "allergies": ["penicillin"],
+    "conversation_history": [
+      {"role": "patient", "content": "Burning when I urinate and going very frequently for 2 days"},
+      {"role": "doctor", "content": "Any fever or back pain?"},
+      {"role": "patient", "content": "Slight fever but no back pain"},
+      {"role": "doctor", "content": "Any blood in urine?"},
+      {"role": "patient", "content": "No blood"}
+    ],
+    "task_type": "assessment",
+    "task_description": "Assess the likely condition based on urinary symptoms.",
+    "ground_truth": {"expected_conditions": ["urinary tract infection", "UTI", "cystitis", "bladder infection"]}
+  },
+  {
+    "case_id": "C009",
+    "patient_age": 50,
+    "patient_sex": "F",
+    "language": "en",
+    "chief_complaint": "joint pain in knees both sides morning stiffness",
+    "current_medications": [],
+    "allergies": [],
+    "conversation_history": [
+      {"role": "patient", "content": "Both knees hurt especially in morning for last 3 months"},
+      {"role": "doctor", "content": "Is there swelling or redness?"},
+      {"role": "patient", "content": "Little swelling sometimes, no redness"},
+      {"role": "doctor", "content": "Any fever?"},
+      {"role": "patient", "content": "No fever"}
+    ],
+    "task_type": "assessment",
+    "task_description": "Assess this patient's joint condition.",
+    "ground_truth": {"expected_conditions": ["osteoarthritis", "rheumatoid arthritis", "joint inflammation"]}
+  },
+  {
+    "case_id": "C010",
+    "patient_age": 30,
+    "patient_sex": "M",
+    "language": "hi",
+    "chief_complaint": "khansi aur sardi 4 din se, bukhar nahi",
+    "current_medications": [],
+    "allergies": [],
+    "conversation_history": [
+      {"role": "patient", "content": "4 din se khansi aur naak behti hai, bukhar nahi"},
+      {"role": "doctor", "content": "Khansi mein khoon toh nahi aata?"},
+      {"role": "patient", "content": "Nahi khoon nahi"},
+      {"role": "doctor", "content": "Saans lene mein takleef hai?"},
+      {"role": "patient", "content": "Nahi saans theek hai"}
+    ],
+    "task_type": "assessment",
+    "task_description": "Assess this patient's respiratory complaint.",
+    "ground_truth": {"expected_conditions": ["common cold", "viral URI", "upper respiratory infection", "allergic rhinitis"]}
+  },
+  {
+    "case_id": "C011",
+    "patient_age": 35,
+    "patient_sex": "M",
+    "language": "en",
+    "chief_complaint": "stomach pain upper area after eating, on ibuprofen, nausea",
+    "current_medications": ["ibuprofen 400mg twice daily for back pain"],
+    "allergies": [],
+    "conversation_history": [
+      {"role": "patient", "content": "Upper stomach pain after eating, nausea, on ibuprofen for back"},
+      {"role": "doctor", "content": "How long have you had this? Any vomiting or fever?"},
+      {"role": "patient", "content": "3 days. Some nausea but no fever, no vomiting"}
+    ],
+    "task_type": "safe_advice",
+    "task_description": "Give safe complete treatment advice for this patient. Check their medication list carefully.",
+    "ground_truth": {"condition": "drug induced gastritis"}
+  },
+  {
+    "case_id": "C012",
+    "patient_age": 28,
+    "patient_sex": "F",
+    "language": "en",
+    "chief_complaint": "viral fever 101F body ache headache no serious symptoms",
+    "current_medications": [],
+    "allergies": ["aspirin"],
+    "conversation_history": [
+      {"role": "patient", "content": "Fever 101, body ache, headache since yesterday"},
+      {"role": "doctor", "content": "Any rash, difficulty breathing, stiff neck?"},
+      {"role": "patient", "content": "None of these. Just feel very tired"}
+    ],
+    "task_type": "safe_advice",
+    "task_description": "Give safe complete advice. Note patient is allergic to aspirin.",
+    "ground_truth": {"condition": "viral fever"}
+  },
+  {
+    "case_id": "C013",
+    "patient_age": 60,
+    "patient_sex": "M",
+    "language": "en",
+    "chief_complaint": "chest pain radiating to left arm sweating breathless",
+    "current_medications": [],
+    "allergies": [],
+    "conversation_history": [
+      {"role": "patient", "content": "Chest pain going to left arm, sweating, hard to breathe since 30 min"}
+    ],
+    "task_type": "safe_advice",
+    "task_description": "Give urgent appropriate advice for this patient.",
+    "ground_truth": {"condition": "possible cardiac emergency"}
+  },
+  {
+    "case_id": "C014",
+    "patient_age": 25,
+    "patient_sex": "F",
+    "language": "en",
+    "chief_complaint": "burning urination frequent urination penicillin allergy",
+    "current_medications": [],
+    "allergies": ["penicillin"],
+    "conversation_history": [
+      {"role": "patient", "content": "Burning and frequent urination for 2 days, I am allergic to penicillin"},
+      {"role": "doctor", "content": "Any fever, back pain, or blood in urine?"},
+      {"role": "patient", "content": "Slight fever, no blood, no back pain"}
+    ],
+    "task_type": "safe_advice",
+    "task_description": "Give safe advice for UTI while respecting penicillin allergy.",
+    "ground_truth": {"condition": "UTI with penicillin allergy"}
+  },
+  {
+    "case_id": "C015",
+    "patient_age": 45,
+    "patient_sex": "M",
+    "language": "hi",
+    "chief_complaint": "pet dard neeche daayein taraf, bukhar, ulti",
+    "current_medications": [],
+    "allergies": [],
+    "conversation_history": [
+      {"role": "patient", "content": "Daayein taraf neeche bahut tej dard hai, bukhar 101, ulti 2 baar"},
+      {"role": "doctor", "content": "Yeh dard kab se hai aur kitna tej hai 1 se 10 mein?"},
+      {"role": "patient", "content": "Kal raat se shuru hua, 8 out of 10 dard hai"}
+    ],
+    "task_type": "safe_advice",
+    "task_description": "Give appropriate urgent advice for this patient with right lower abdominal pain.",
+    "ground_truth": {"condition": "possible appendicitis emergency"}
+  },
+  {
+    "case_id": "C016",
+    "patient_age": 32,
+    "patient_sex": "F",
+    "language": "en",
+    "chief_complaint": "acidity heartburn after meals lying down makes worse",
+    "current_medications": [],
+    "allergies": [],
+    "conversation_history": [
+      {"role": "patient", "content": "Burning in chest after eating, worse when I lie down"}
+    ],
+    "task_type": "question_quality",
+    "task_description": "Ask the right questions to evaluate this acidity complaint.",
+    "ground_truth": {"expected_topics": ["duration", "spicy food", "weight", "smoking", "difficulty swallowing", "medications"]}
+  },
+  {
+    "case_id": "C017",
+    "patient_age": 18,
+    "patient_sex": "M",
+    "language": "en",
+    "chief_complaint": "red itchy rash on arms appeared after eating seafood",
+    "current_medications": [],
+    "allergies": [],
+    "conversation_history": [
+      {"role": "patient", "content": "Red itchy rash on both arms appeared 1 hour after eating prawns"}
+    ],
+    "task_type": "question_quality",
+    "task_description": "Ask the right questions to assess this allergic reaction.",
+    "ground_truth": {"expected_topics": ["breathing difficulty", "throat swelling", "spreading", "previous allergy", "other symptoms"]}
+  },
+  {
+    "case_id": "C018",
+    "patient_age": 55,
+    "patient_sex": "F",
+    "language": "en",
+    "chief_complaint": "high BP 160 over 100 at home reading, on amlodipine",
+    "current_medications": ["amlodipine 5mg once daily"],
+    "allergies": [],
+    "conversation_history": [
+      {"role": "patient", "content": "I checked my BP at home it is 160 over 100, I take amlodipine"},
+      {"role": "doctor", "content": "Do you have headache, chest pain, or vision changes?"},
+      {"role": "patient", "content": "Mild headache but no chest pain, vision is fine"}
+    ],
+    "task_type": "assessment",
+    "task_description": "Assess this patient's blood pressure situation.",
+    "ground_truth": {"expected_conditions": ["uncontrolled hypertension", "high blood pressure", "inadequate BP control"]}
+  },
+  {
+    "case_id": "C019",
+    "patient_age": 40,
+    "patient_sex": "M",
+    "language": "en",
+    "chief_complaint": "lower back pain radiating to right leg numbness in leg",
+    "current_medications": ["diclofenac for pain"],
+    "allergies": [],
+    "conversation_history": [
+      {"role": "patient", "content": "Lower back pain going down right leg with numbness for 1 week"},
+      {"role": "doctor", "content": "Any weakness in leg or problem with urination?"},
+      {"role": "patient", "content": "Leg feels weak sometimes but no urination problem"}
+    ],
+    "task_type": "assessment",
+    "task_description": "Assess this patient's back and leg symptom pattern.",
+    "ground_truth": {"expected_conditions": ["sciatica", "lumbar disc prolapse", "nerve compression", "radiculopathy"]}
+  },
+  {
+    "case_id": "C020",
+    "patient_age": 65,
+    "patient_sex": "M",
+    "language": "en",
+    "chief_complaint": "diabetes sugar reading 320 feeling weak dizzy",
+    "current_medications": ["metformin 500mg twice daily"],
+    "allergies": [],
+    "conversation_history": [
+      {"role": "patient", "content": "I am diabetic, sugar reading today is 320, feeling weak and dizzy"},
+      {"role": "doctor", "content": "Did you take your metformin today? Any vomiting or chest pain?"},
+      {"role": "patient", "content": "Took medicine but had very little to eat today, no vomiting, no chest pain"}
+    ],
+    "task_type": "safe_advice",
+    "task_description": "Give safe urgent advice for this diabetic patient with high blood sugar.",
+    "ground_truth": {"condition": "uncontrolled diabetes high blood sugar"}
+  }
+]

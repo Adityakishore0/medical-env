@@ -1,0 +1,134 @@
+name: medical-ai-doctor
+version: "1.0.0"
+description: >
+  Free AI Doctor for patients who cannot afford healthcare.
+  Trains AI agents to conduct medical consultations — asking smart
+  follow-up questions, assessing conditions from symptoms, and giving
+  safe treatment advice while avoiding dangerous drug recommendations.
+  Covers all real-world conditions. Supports English and Hindi.
+  Real-world impact: 500 million poor patients globally.
+
+author: medical-ai-doctor-team
+license: Apache-2.0
+
+environment:
+  type: stateful
+  modality: text
+  domain: healthcare
+  real_world_task: true
+
+  observation_space:
+    type: structured_text
+    schema: env.models.Observation
+    fields:
+      - case_id: string
+      - patient_age: integer
+      - patient_sex: enum[M, F, Other]
+      - language: enum[en, hi]
+      - chief_complaint: string
+      - conversation_history: list[{role, content}]
+      - current_medications: list[string]
+      - allergies: list[string]
+      - task_type: enum[question_quality, assessment, safe_advice]
+      - task_description: string
+
+  action_space:
+    type: structured_json
+    variants:
+      - name: QuestionQualityAction
+        task: question_quality
+        fields: [action_type, doctor_message, questions_asked, reasoning]
+      - name: AssessmentAction
+        task: assessment
+        fields: [action_type, doctor_message, primary_condition, possible_conditions, confidence, reasoning]
+      - name: SafeAdviceAction
+        task: safe_advice
+        fields: [action_type, doctor_message, what_to_do, what_to_eat, medicines, what_to_avoid, go_to_hospital_if, contraindications_checked, reasoning]
+
+  reward:
+    range: [0.0, 1.0]
+    type: composite_partial_credit
+    components:
+      accuracy: weight 0.50
+      safety: weight 0.30
+      completeness: weight 0.20
+    penalties:
+      danger_penalty: up to -0.90 for dangerous medicine recommendations or missed emergencies
+
+tasks:
+  - id: task1_question_quality
+    name: "Smart Question Asking"
+    difficulty: easy
+    description: >
+      Given patient complaint, ask correct follow-up questions.
+      Graded on coverage of required clinical topics and red flag screening.
+    grader: env.tasks.task1_question_quality.grade
+    metric: question_coverage_safety
+    reward_range: [0.0, 1.0]
+    n_cases: 7
+
+  - id: task2_assessment
+    name: "Condition Assessment"
+    difficulty: medium
+    description: >
+      Based on conversation, identify most likely condition.
+      Partial credit for reasonable differentials.
+      Penalty for missing emergencies.
+    grader: env.tasks.task2_assessment.grade
+    metric: condition_accuracy_coverage
+    reward_range: [0.0, 1.0]
+    n_cases: 7
+
+  - id: task3_safe_advice
+    name: "Safe Treatment Advice"
+    difficulty: hard
+    description: >
+      Give complete safe advice with medicines, diet, and hospital warnings.
+      Heavy penalty for contraindicated medicines or allergy violations.
+      Must always include when to go to hospital.
+    grader: env.tasks.task3_safe_advice.grade
+    metric: completeness_safety_contraindication
+    reward_range: [0.0, 1.0]
+    n_cases: 6
+
+endpoints:
+  base_url: "${ENV_BASE_URL}"
+  health:
+    path: /health
+    method: GET
+    expected_status: 200
+  reset:
+    path: /reset
+    method: POST
+    body_schema: {case_id: optional[string], seed: optional[integer]}
+    response_schema: Observation
+  step:
+    path: /step
+    method: POST
+    body_schema: {action: dict}
+    response_schema: StepResponse
+  state:
+    path: /state
+    method: GET
+    response_schema: StateResponse
+
+inference:
+  script: inference.py
+  location: root
+  client: openai
+  required_env_vars:
+    - API_BASE_URL
+    - MODEL_NAME
+    - HF_TOKEN
+  log_format:
+    start: "[START] task={task} env={env} model={model}"
+    step:  "[STEP] step={n} action={a} reward={r} done={b} error={e}"
+    end:   "[END] success={b} steps={n} score={s} rewards={r}"
+  max_runtime_minutes: 20
+  hardware: vcpu=2 memory=8gb
+
+deployment:
+  platform: huggingface_spaces
+  runtime: docker
+  port: 7860
+  dockerfile: Dockerfile
