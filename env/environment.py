@@ -125,6 +125,7 @@ class MedicalAIDoctorEnvironment:
 
     @staticmethod
     def _null_reward(msg: str) -> Reward:
+        # FIX: Changed from 0.0 to 0.001 so score is strictly between 0 and 1
         return Reward(
             total=0.001,
             breakdown=RewardBreakdown(),
