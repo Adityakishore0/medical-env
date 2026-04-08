@@ -1,8 +1,21 @@
 """
 server/app.py — Multi-mode deployment entry point for Medical AI Doctor OpenEnv.
-This module re-exports the FastAPI app from main.py so openenv-core can locate it
-via the [project.scripts] entry point: medical-ai-doctor-server = server.app:app
 """
+import sys
+import os
+
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from main import app
+import uvicorn
 
 __all__ = ["app"]
+
+
+def main():
+    port = int(os.environ.get("PORT", 7860))
+    uvicorn.run("server.app:app", host="0.0.0.0", port=port, reload=False)
+
+
+if __name__ == "__main__":
+    main()
