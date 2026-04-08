@@ -54,10 +54,10 @@ Action = QuestionQualityAction | AssessmentAction | SafeAdviceAction
 
 
 class RewardBreakdown(BaseModel):
-    accuracy: float = Field(0.0, ge=0.0, le=1.0)
-    safety: float = Field(0.0, ge=0.0, le=1.0)
-    completeness: float = Field(0.0, ge=0.0, le=1.0)
-    danger_penalty: float = Field(0.0, ge=0.0, le=1.0)
+    accuracy: float = Field(0.001, ge=0.0, le=1.0)
+    safety: float = Field(0.001, ge=0.0, le=1.0)
+    completeness: float = Field(0.001, ge=0.0, le=1.0)
+    danger_penalty: float = Field(0.001, ge=0.0, le=1.0)
 
 
 class Reward(BaseModel):

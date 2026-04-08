@@ -81,21 +81,21 @@ def list_tasks():
                 "name": "Smart Question Asking",
                 "difficulty": "easy",
                 "description": "Given a patient complaint, ask the right follow-up questions like a real doctor. Score based on completeness and relevance of questions.",
-                "reward_range": [0.0, 1.0],
+                "reward_range": [0.001, 0.999],
             },
             {
                 "id": "assessment",
                 "name": "Condition Assessment",
                 "difficulty": "medium",
                 "description": "Based on conversation history, identify the most likely medical condition. Partial credit for reasonable differentials.",
-                "reward_range": [0.0, 1.0],
+                "reward_range": [0.001, 0.999],
             },
             {
                 "id": "safe_advice",
                 "name": "Safe Treatment Advice",
                 "difficulty": "hard",
                 "description": "Give complete safe advice including medicines, diet, and hospital warnings. Heavy penalty for recommending dangerous or contraindicated medicines.",
-                "reward_range": [0.0, 1.0],
+                "reward_range": [0.001, 0.999],
             },
         ]
     }

@@ -46,7 +46,7 @@ environment:
         fields: [action_type, doctor_message, what_to_do, what_to_eat, medicines, what_to_avoid, go_to_hospital_if, contraindications_checked, reasoning]
 
   reward:
-    range: [0.0, 1.0]
+    range: [0.001, 0.999]
     type: composite_partial_credit
     components:
       accuracy: weight 0.50
@@ -56,7 +56,7 @@ environment:
       danger_penalty: up to -0.90 for dangerous medicine recommendations or missed emergencies
 
 tasks:
-  - id: task1_question_quality
+  - id: question_quality
     name: "Smart Question Asking"
     difficulty: easy
     description: >
@@ -64,10 +64,10 @@ tasks:
       Graded on coverage of required clinical topics and red flag screening.
     grader: env.tasks.task1_question_quality.grade
     metric: question_coverage_safety
-    reward_range: [0.0, 1.0]
+    reward_range: [0.001, 0.999]
     n_cases: 7
 
-  - id: task2_assessment
+  - id: assessment
     name: "Condition Assessment"
     difficulty: medium
     description: >
@@ -76,10 +76,10 @@ tasks:
       Penalty for missing emergencies.
     grader: env.tasks.task2_assessment.grade
     metric: condition_accuracy_coverage
-    reward_range: [0.0, 1.0]
+    reward_range: [0.001, 0.999]
     n_cases: 7
 
-  - id: task3_safe_advice
+  - id: safe_advice
     name: "Safe Treatment Advice"
     difficulty: hard
     description: >
@@ -88,7 +88,7 @@ tasks:
       Must always include when to go to hospital.
     grader: env.tasks.task3_safe_advice.grade
     metric: completeness_safety_contraindication
-    reward_range: [0.0, 1.0]
+    reward_range: [0.001, 0.999]
     n_cases: 6
 
 endpoints:
@@ -100,12 +100,12 @@ endpoints:
   reset:
     path: /reset
     method: POST
-    body_schema: {case_id: optional[string], seed: optional[integer]}
+    body_schema: "case_id: optional[string], seed: optional[integer]"
     response_schema: Observation
   step:
     path: /step
     method: POST
-    body_schema: {action: dict}
+    body_schema: "action: dict"
     response_schema: StepResponse
   state:
     path: /state
