@@ -53,14 +53,17 @@ def log_start(task: str, env: str, model: str) -> None:
 
 
 def log_step(step: int, action: str, reward: float, done: bool, error: Optional[str]) -> None:
+    reward = max(0.001, min(0.999, float(reward)))
     error_val = error if error else "null"
     done_val = str(done).lower()
     action_short = action[:80].replace("\n", " ")
-    print(f"[STEP] step={step} action={action_short} reward={reward:.2f} done={done_val} error={error_val}", flush=True)
+    print(f"[STEP] step={step} action={action_short} reward={reward:.3f} done={done_val} error={error_val}", flush=True)
 
 
 def log_end(success: bool, steps: int, score: float, rewards: List[float]) -> None:
-    rewards_str = ",".join(f"{r:.2f}" for r in rewards)
+    score = max(0.001, min(0.999, float(score)))
+    rewards = [max(0.001, min(0.999, float(r))) for r in rewards]
+    rewards_str = ",".join(f"{r:.3f}" for r in rewards)
     print(f"[END] success={str(success).lower()} steps={steps} score={score:.3f} rewards={rewards_str}", flush=True)
 
 
@@ -230,7 +233,8 @@ def run_episode(client: httpx.Client, llm_client: OpenAI, case_id: Optional[str]
     r.raise_for_status()
     result = r.json()
 
-    reward_total = result.get("reward", {}).get("total", 0.0)
+    reward_total = result.get("reward", {}).get("total", 0.001)
+    reward_total = max(0.001, min(0.999, float(reward_total)))
     done = result.get("done", True)
     is_safe = result.get("reward", {}).get("is_safe", True)
 
@@ -280,11 +284,12 @@ def main():
             log_step(step=step_num, action=f"case={case_id}", reward=score, done=True, error=None)
         except Exception as e:
             error_msg = str(e)[:100]
-            all_scores.append(0.0)
-            log_step(step=step_num, action=f"case={case_id}", reward=0.0, done=True, error=error_msg)
+            all_scores.append(0.001)
+            log_step(step=step_num, action=f"case={case_id}", reward=0.001, done=True, error=error_msg)
 
     elapsed = round(time.time() - start_time, 1)
     final_score = sum(all_scores) / max(len(all_scores), 1)
+    final_score = max(0.001, min(0.999, final_score))
     success = final_score >= 0.4
 
     print(f"[INFO] elapsed={elapsed}s cases={len(all_scores)} safe_rate={safe_count/max(len(all_scores),1):.2f}", flush=True)
