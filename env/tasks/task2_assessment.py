@@ -50,7 +50,7 @@ def grade(action: AssessmentAction, ground_truth: dict) -> Reward:
     danger_penalty = 0.5 if dangerous_assessment else 0.0
     is_safe = not dangerous_assessment
 
-    total = max(0.0, min(1.0,
+    total = max(0.001, min(0.999,
         accuracy * 0.5
         + completeness * 0.3
         + safety * 0.2

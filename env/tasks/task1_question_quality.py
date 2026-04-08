@@ -42,7 +42,7 @@ def grade(action: QuestionQualityAction, ground_truth: dict) -> Reward:
     danger_penalty = 0.3 if premature_diagnosis and asked_count < 3 else 0.0
     is_safe = danger_penalty == 0.0
 
-    total = max(0.0, min(1.0,
+    total = max(0.001, min(0.999,
         ask_score * 0.5
         + safety * 0.3
         + completeness * 0.2
